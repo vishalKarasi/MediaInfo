@@ -1,0 +1,23 @@
+#home {
+  @extend .flex;
+  flex-direction: column;
+
+  .welcome {
+    font-size: 4em;
+    text-align: center;
+    font-family: ubuntu;
+  }
+
+  p {
+    font-size: 1.5em;
+    font-family: poppins;
+    line-height: 0.9;
+  }
+
+  p:last-child {
+    font-size: 2em;
+    font-family: roboto;
+    font-style: italic;
+    line-height: 0.9;
+  }
+}

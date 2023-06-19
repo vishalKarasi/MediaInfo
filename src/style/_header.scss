@@ -1,0 +1,63 @@
+#header {
+  @extend .flex;
+  justify-content: space-between;
+  background-color: $clr-container;
+  padding: 0.5rem 2em;
+
+  .logo {
+    font: $logo-font;
+    font-family: ubuntu;
+  }
+
+  nav {
+    @extend .flex;
+    gap: 2em;
+
+    a {
+      @extend .flex;
+      gap: 0.25em;
+
+      .navIcon {
+        @extend .flex;
+      }
+
+      .navLabel {
+        font: $link-font;
+      }
+    }
+  }
+
+  .profileContainer {
+    width: 2.5em;
+    height: 2.5em;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+}
+
+@media (320px <= width < 680px) {
+  #header {
+    position: relative;
+    nav {
+      display: inline-block;
+      height: max-content;
+      background-color: $clr-container;
+      position: absolute;
+      inset: 100% 0 50% 0;
+      box-shadow: 0 0 0.2rem $clr-background;
+
+      .navLink {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+          width: fit-content;
+          margin-block: 0.5em;
+        }
+      }
+    }
+  }
+}
