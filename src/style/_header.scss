@@ -27,6 +27,24 @@
     }
   }
 
+  #search {
+    @extend .flex;
+    background-color: $clr-button;
+    border-radius: 0.25em;
+
+    button {
+      @extend .flex;
+      background-color: transparent;
+      margin: 1em;
+    }
+
+    input {
+      width: 25ch;
+      font-size: 0.95em;
+      background-color: transparent;
+    }
+  }
+
   .profileContainer {
     width: 2.5em;
     height: 2.5em;
@@ -35,29 +53,50 @@
       border-radius: 50%;
     }
   }
+
+  .hamburger {
+    position: relative;
+    display: none;
+    width: 1.5em;
+    height: 1em;
+
+    .line {
+      width: inherit;
+      height: 0.2em;
+      background-color: $clr-button;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        width: inherit;
+        height: 0.2em;
+        background-color: $clr-button;
+      }
+
+      &::before {
+        inset: 0 auto;
+      }
+
+      &::after {
+        inset: auto 0 0 auto;
+      }
+    }
+  }
 }
 
 @media (320px <= width < 680px) {
   #header {
     position: relative;
+    display: block;
     nav {
-      display: inline-block;
-      height: max-content;
-      background-color: $clr-container;
-      position: absolute;
-      inset: 100% 0 50% 0;
-      box-shadow: 0 0 0.2rem $clr-background;
+      display: block;
+    }
 
-      .navLink {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        a {
-          width: fit-content;
-          margin-block: 0.5em;
-        }
-      }
+    .hamburger {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

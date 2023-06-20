@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Card({ data }) {
   const { Title, Year, imdbID, Type, Poster } = data;
   const truncatedTitle =
-    Title.length > 40 ? Title.substring(0, 40) + "..." : Title;
+    Title.length > 25 ? Title.substring(0, 25) + "..." : Title;
 
   return (
     <Link to={`/details/${imdbID}`} className="card">

@@ -51,3 +51,12 @@ $body-font: 400 clamp(15px, 1.25vw + 10px, 18px) / 1.5 open-sans;
   justify-content: center;
   align-items: center;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

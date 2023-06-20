@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function AnimeCard({ data }) {
   const { mal_id, title, images, year } = data;
   const truncatedTitle =
-    title.length > 40 ? title.substring(0, 40) + "..." : title;
+    title.length > 25 ? title.substring(0, 25) + "..." : title;
 
   return (
     <Link to={`/details/${mal_id}`} className="card">

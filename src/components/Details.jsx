@@ -3,6 +3,8 @@ import { fetchShowById, removeSelectedShow } from "@app/reducers/showSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FaStar, FaThumbsUp, FaFilm, FaCalendarAlt } from "react-icons/fa";
+import Loading from "./Loading";
+import Error from "./Error";
 
 function Detail() {
   const dispatch = useDispatch();
@@ -71,6 +73,9 @@ function Detail() {
           <div>
             <span>Awards:</span> {selectedShow.Awards}
           </div>
+          <div>
+            <span>Type:</span> {selectedShow.Type}
+          </div>
         </article>
       </section>
       <section className="right">
@@ -81,9 +86,9 @@ function Detail() {
 
   return (
     <main id="selectedShow">
-      {status === "loading" && <div className="loading">Loading...</div>}
+      {status === "loading" && <Loading />}
       {status === "success" && details}
-      {status === "error" && <div>{error}</div>}
+      {status === "error" && <Error error={error} />}
     </main>
   );
 }

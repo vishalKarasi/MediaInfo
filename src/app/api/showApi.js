@@ -1,20 +1,20 @@
 import { omdbApi, omdbKey } from "./mainApi";
 
-export const getMoviesAll = () => {
+export const getMoviesAll = (term) => {
   return omdbApi.get("", {
     params: {
       apiKey: omdbKey,
-      s: "Harry",
+      s: term || "Harry",
       type: "movie",
     },
   });
 };
 
-export const getSeriesAll = () => {
+export const getSeriesAll = (term) => {
   return omdbApi.get("", {
     params: {
       apiKey: omdbKey,
-      s: "Friends",
+      s: term || "Friend",
       type: "series",
     },
   });

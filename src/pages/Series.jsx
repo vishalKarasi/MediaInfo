@@ -2,10 +2,12 @@ import { fetchSeries } from "@app/reducers/showSlice";
 import Card from "@components/Card";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { SwiperSettings } from "@components/Setting";
+import Carousel from "@components/Carousel";
+import Loading from "@components/Loading";
+import Error from "@components/Error";
 
 function Series() {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ function Series() {
   }, [dispatch]);
 
   const series = (
-    <Swiper {...SwiperSettings}>
+    <Carousel>
       {SERIES.map((item, index) => {
         return (
           <SwiperSlide key={index}>
@@ -24,15 +26,15 @@ function Series() {
           </SwiperSlide>
         );
       })}
-    </Swiper>
+    </Carousel>
   );
 
   return (
     <main id="series">
       <h1>Series</h1>
-      {status === "loading" && <div className="loading">Loading...</div>}
+      {status === "loading" && <Loading />}
       {status === "success" && series}
-      {status === "error" && <div>{error}</div>}
+      {status === "error" && <Error error={error} />}
     </main>
   );
 }

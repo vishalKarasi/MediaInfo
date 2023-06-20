@@ -23,9 +23,9 @@ export const fetchShowById = createAsyncThunk(
 
 export const fetchMovies = createAsyncThunk(
   "fetchMovies",
-  async (_, { rejectWithValue }) => {
+  async (term, { rejectWithValue }) => {
     try {
-      const response = await getMoviesAll();
+      const response = await getMoviesAll(term);
       return response.data;
     } catch (error) {
       return rejectWithValue("Error fetching shows: " + error.message);
@@ -35,9 +35,9 @@ export const fetchMovies = createAsyncThunk(
 
 export const fetchSeries = createAsyncThunk(
   "fetchSeries",
-  async (_, { rejectWithValue }) => {
+  async (term, { rejectWithValue }) => {
     try {
-      const response = await getSeriesAll();
+      const response = await getSeriesAll(term);
       return response.data;
     } catch (error) {
       return rejectWithValue("Error fetching series: " + error.message);
