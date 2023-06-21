@@ -1,16 +1,21 @@
 #header {
-  @extend .flex;
+  position: sticky;
+  inset: 0 0 auto auto;
+  z-index: 99;
+  display: flex;
   justify-content: space-between;
+  padding: 0.5rem 2.5em;
   background-color: $clr-container;
-  padding: 0.5rem 2em;
+  place-items: center;
 
   .logo {
     font: $logo-font;
     font-family: ubuntu;
   }
 
-  nav {
+  .navBar {
     @extend .flex;
+    justify-content: space-between;
     gap: 2em;
 
     a {
@@ -27,10 +32,11 @@
     }
   }
 
-  #search {
+  .search {
     @extend .flex;
     background-color: $clr-button;
     border-radius: 0.25em;
+    width: fit-content;
 
     button {
       @extend .flex;
@@ -40,12 +46,12 @@
 
     input {
       width: 25ch;
-      font-size: 0.95em;
+      font-size: 0.8em;
       background-color: transparent;
     }
   }
 
-  .profileContainer {
+  .profile {
     width: 2.5em;
     height: 2.5em;
 
@@ -85,15 +91,27 @@
   }
 }
 
-@media (320px <= width < 680px) {
+@media (340px <= width < 1000px) {
   #header {
-    position: relative;
-    display: block;
-    nav {
-      display: block;
+    .logo {
+      grid-column: 1/3;
+    }
+
+    .nav {
+      display: none;
+    }
+
+    .search {
+      display: none;
+    }
+
+    .profile {
+      grid-column: 7/8;
     }
 
     .hamburger {
+      position: absolute;
+      bottom: 0;
       display: flex;
       justify-content: center;
       align-items: center;

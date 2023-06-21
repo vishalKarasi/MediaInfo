@@ -14,7 +14,7 @@ export const getSeriesAll = (term) => {
   return omdbApi.get("", {
     params: {
       apiKey: omdbKey,
-      s: term || "Friend",
+      s: term || "Friends",
       type: "series",
     },
   });

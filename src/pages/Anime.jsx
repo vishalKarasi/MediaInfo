@@ -1,13 +1,12 @@
 import { fetchAnime } from "@app/reducers/animeSlice";
-import AnimeCard from "@components/AnimeCard";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Carousel from "@components/Carousel";
 import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import Loading from "@components/Loading";
+import MediaCard from "@components/MediaCard";
 
 function Anime() {
   const dispatch = useDispatch();
@@ -19,13 +18,15 @@ function Anime() {
 
   const anime = (
     <Carousel>
-      {ANIME.map((item, index) => {
-        return (
+      {!ANIME || ANIME.length === 0 ? (
+        <Error error="NO MATCH" />
+      ) : (
+        ANIME.map((item, index) => (
           <SwiperSlide key={index}>
-            <AnimeCard data={item} />
+            <MediaCard data={item} type="anime" />
           </SwiperSlide>
-        );
-      })}
+        ))
+      )}
     </Carousel>
   );
 

@@ -1,84 +1,87 @@
+import { fetchAnimeById, removeSelectedAnime } from "@app/reducers/animeSlice";
 import React, { useEffect } from "react";
-import { fetchShowById, removeSelectedShow } from "@app/reducers/showSlice";
+import { FaCalendarAlt, FaFilm, FaStar, FaThumbsUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FaStar, FaThumbsUp, FaFilm, FaCalendarAlt } from "react-icons/fa";
 import Loading from "./Loading";
 import Error from "./Error";
 
-function Detail() {
+function AnimeDetails() {
   const dispatch = useDispatch();
-  const { selectedShow, status, error } = useSelector((state) => state.shows);
+  const { selectedAnime, status, error } = useSelector((state) => state.anime);
+  console.log(selectedAnime);
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchShowById(id));
+    dispatch(fetchAnimeById(id));
     return () => {
-      dispatch(removeSelectedShow());
+      dispatch(removeSelectedAnime());
     };
   }, [dispatch, id]);
 
-  const details = (
+  const animeDetails = (
     <>
       <section className="left">
-        <h1 className="title">{selectedShow.Title}</h1>
+        <h1 className="title">{selectedAnime.title}</h1>
         <article>
           <div>
             <span>Rating:</span>
             <i>
-              {selectedShow.imdbRating}
+              {selectedAnime.score}
               <FaStar />
             </i>
           </div>
           <div>
             <span>Likes:</span>
             <i>
-              {selectedShow.imdbVotes}
+              {selectedAnime.favorites}
               <FaThumbsUp />
             </i>
           </div>
           <div>
             <span>Runtime:</span>
             <i>
-              {selectedShow.Runtime}
-
+              {selectedAnime.duration}
               <FaFilm />
             </i>
           </div>
           <div>
             <span>Year:</span>
             <i>
-              {selectedShow.Year}
+              {selectedAnime.year}
               <FaCalendarAlt />
             </i>
           </div>
         </article>
         <p className="plot">
-          <span>Plot: </span> {selectedShow.Plot}
+          <span>Plot: </span> {selectedAnime.sypnosis}
         </p>
         <article className="info">
           <div>
-            <span>Director:</span> {selectedShow.Director}
+            <span>Studio:</span> {selectedAnime.studios}
           </div>
           <div>
-            <span>Actors:</span> {selectedShow.Actors}
+            <span>Season:</span> {selectedAnime.season}
           </div>
           <div>
-            <span>Genres:</span> {selectedShow.Genre}
+            <span>Genres:</span> {selectedAnime.generes}
           </div>
           <div>
-            <span>Languages:</span> {selectedShow.Language}
+            <span>Episodes:</span> {selectedAnime.episodes}
           </div>
           <div>
-            <span>Awards:</span> {selectedShow.Awards}
+            <span>Rank:</span> {selectedAnime.rank}
           </div>
           <div>
-            <span>Type:</span> {selectedShow.Type}
+            <span>Type:</span> {selectedAnime.Type}
           </div>
         </article>
       </section>
       <section className="right">
-        <img src={selectedShow.Poster} alt={selectedShow.Title} />
+        {/* <img
+          src={selectedAnime.images.jpg.large_image_url}
+          alt={selectedAnime.title}
+        /> */}
       </section>
     </>
   );
@@ -86,10 +89,10 @@ function Detail() {
   return (
     <main id="selectedShow">
       {status === "loading" && <Loading />}
-      {status === "success" && details}
+      {status === "success" && animeDetails}
       {status === "error" && <Error error={error} />}
     </main>
   );
 }
 
-export default Detail;
+export default AnimeDetails;

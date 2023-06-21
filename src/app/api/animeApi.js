@@ -9,10 +9,5 @@ export const getAnimeAll = () => {
 };
 
 export const getAnimeById = (id) => {
-  return jikanApi.get("", {
-    params: {
-      i: id,
-      Plot: "full",
-    },
-  });
+  return jikanApi.get(`/${id}`);
 };

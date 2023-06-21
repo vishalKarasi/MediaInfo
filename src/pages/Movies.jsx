@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-
-import Card from "@components/Card";
 import { fetchMovies } from "@app/reducers/showSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SwiperSlide } from "swiper/react";
@@ -10,6 +8,7 @@ import "swiper/css/pagination";
 import Carousel from "@components/Carousel";
 import Loading from "@components/Loading";
 import Error from "@components/Error";
+import MediaCard from "@components/MediaCard";
 
 function Movies() {
   const dispatch = useDispatch();
@@ -21,13 +20,15 @@ function Movies() {
 
   const movies = (
     <Carousel>
-      {MOVIES.map((item, index) => {
-        return (
+      {!MOVIES || MOVIES.length === 0 ? (
+        <Error error="NO MATCH" />
+      ) : (
+        MOVIES.map((item, index) => (
           <SwiperSlide key={index}>
-            <Card data={item} />
+            <MediaCard data={item} type="movie" />
           </SwiperSlide>
-        );
-      })}
+        ))
+      )}
     </Carousel>
   );
 

@@ -7,8 +7,8 @@ import Footer from "@pages/Footer";
 import PageNotFound from "@pages/PageNotFound";
 import Movies from "@pages/Movies";
 import Series from "@pages/Series";
-import Popular from "@pages/Anime";
 import Anime from "@pages/Anime";
+import AnimeDetails from "@components/AnimeDetails";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/series" element={<Series />}></Route>
         <Route path="/anime" element={<Anime />}></Route>
         <Route path="/details/:id" element={<Detail />}></Route>
+        <Route path="/animeDetails/:id" element={<AnimeDetails />}></Route>
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
       <Footer />

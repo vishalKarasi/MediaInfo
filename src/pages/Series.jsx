@@ -1,5 +1,4 @@
 import { fetchSeries } from "@app/reducers/showSlice";
-import Card from "@components/Card";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SwiperSlide } from "swiper/react";
@@ -8,6 +7,7 @@ import "swiper/css/pagination";
 import Carousel from "@components/Carousel";
 import Loading from "@components/Loading";
 import Error from "@components/Error";
+import MediaCard from "@components/MediaCard";
 
 function Series() {
   const dispatch = useDispatch();
@@ -19,13 +19,15 @@ function Series() {
 
   const series = (
     <Carousel>
-      {SERIES.map((item, index) => {
-        return (
+      {!SERIES || SERIES.length === 0 ? (
+        <Error error="NO MATCH" />
+      ) : (
+        SERIES.map((item, index) => (
           <SwiperSlide key={index}>
-            <Card data={item} />;
+            <MediaCard data={item} type="series" />
           </SwiperSlide>
-        );
-      })}
+        ))
+      )}
     </Carousel>
   );
 
