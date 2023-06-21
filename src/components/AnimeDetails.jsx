@@ -54,17 +54,21 @@ function AnimeDetails() {
           </div>
         </article>
         <p className="plot">
-          <span>Plot: </span> {selectedAnime.sypnosis}
+          <span>Plot: </span> {selectedAnime.synopsis}
         </p>
         <article className="info">
           <div>
-            <span>Studio:</span> {selectedAnime.studios}
+            <span>Studio:</span>
+            {selectedAnime.studios &&
+              selectedAnime.studios.map((studio) => studio.name).join(", ")}
           </div>
           <div>
             <span>Season:</span> {selectedAnime.season}
           </div>
           <div>
-            <span>Genres:</span> {selectedAnime.generes}
+            <span>Genres:</span>
+            {selectedAnime.genres &&
+              selectedAnime.genres.map((genre) => genre.name).join(", ")}
           </div>
           <div>
             <span>Episodes:</span> {selectedAnime.episodes}
@@ -73,15 +77,17 @@ function AnimeDetails() {
             <span>Rank:</span> {selectedAnime.rank}
           </div>
           <div>
-            <span>Type:</span> {selectedAnime.Type}
+            <span>Type:</span> {selectedAnime.type}
           </div>
         </article>
       </section>
       <section className="right">
-        {/* <img
-          src={selectedAnime.images.jpg.large_image_url}
-          alt={selectedAnime.title}
-        /> */}
+        {selectedAnime.images?.jpg?.large_image_url && (
+          <img
+            src={selectedAnime.images.jpg.large_image_url}
+            alt={selectedAnime.title}
+          />
+        )}
       </section>
     </>
   );

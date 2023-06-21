@@ -9,6 +9,7 @@ import Error from "./Error";
 function Detail() {
   const dispatch = useDispatch();
   const { selectedShow, status, error } = useSelector((state) => state.shows);
+  console.log(selectedShow);
   const { id } = useParams();
 
   useEffect(() => {
