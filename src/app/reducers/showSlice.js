@@ -89,7 +89,6 @@ export const showSlice = createSlice({
       .addCase(fetchSeries.fulfilled, (state, action) => {
         state.status = "success";
         state.SERIES = action.payload.Search;
-        console.log();
       })
       .addCase(fetchSeries.rejected, (state, action) => {
         state.status = "error";

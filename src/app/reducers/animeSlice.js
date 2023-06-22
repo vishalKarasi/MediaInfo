@@ -22,9 +22,9 @@ export const fetchAnimeById = createAsyncThunk(
 
 export const fetchAnime = createAsyncThunk(
   "fetchAnime",
-  async (_, { rejectWithValue }) => {
+  async (term, { rejectWithValue }) => {
     try {
-      const response = await getAnimeAll();
+      const response = await getAnimeAll(term);
       return response.data;
     } catch (error) {
       return rejectWithValue("Error fetching anime: " + error.message);

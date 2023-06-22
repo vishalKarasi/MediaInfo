@@ -16,11 +16,19 @@
 
 :root {
   color-scheme: light dark;
+  font: $body-font;
+  scroll-behavior: smooth;
 }
 
 body {
+  background-color: var(--bgColor);
+}
+
+body,
+input,
+textarea {
+  font: $body-font;
   color: $clr-text;
-  background-color: $clr-background;
 }
 
 #root {
@@ -38,16 +46,9 @@ body {
   }
 }
 
-body,
-input,
-textarea {
-  font: $body-font;
-}
-
 h1,
 h2,
 h3 {
-  font-family: poppins;
   line-height: 1.1;
 }
 
@@ -65,7 +66,7 @@ h2 {
 img {
   display: block;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   object-fit: cover;
 }
 
@@ -110,10 +111,11 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 main {
-  min-height: calc(100vh - 4rem);
+  min-width: 340px;
+  min-height: calc(100dvh - 4rem);
 }
 
 main > * {
   max-width: 95%;
-  margin: 1rem auto;
+  margin: 0.5em auto;
 }

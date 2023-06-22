@@ -2,22 +2,19 @@
   @extend .flex;
   flex-direction: column;
 
-  .welcome {
-    font-size: 4em;
+  & > * {
     text-align: center;
-    font-family: ubuntu;
+  }
+
+  .welcome {
+    font: $logo-font;
   }
 
   p {
-    font-size: 1.5em;
-    font-family: poppins;
-    line-height: 0.9;
+    font: $link-font;
   }
 
   p:last-child {
-    font-size: 2em;
-    font-family: roboto;
-    font-style: italic;
-    line-height: 0.9;
+    font: $head-font;
   }
 }

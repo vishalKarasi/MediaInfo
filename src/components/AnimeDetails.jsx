@@ -9,7 +9,6 @@ import Error from "./Error";
 function AnimeDetails() {
   const dispatch = useDispatch();
   const { selectedAnime, status, error } = useSelector((state) => state.anime);
-  console.log(selectedAnime);
   const { id } = useParams();
 
   useEffect(() => {

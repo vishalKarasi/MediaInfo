@@ -19,16 +19,16 @@
     article {
       display: flex;
       justify-content: flex-start;
-      gap: 4rem;
+      gap: 2rem;
 
       & > div {
         @extend .flex;
         justify-content: flex-start;
-        gap: 1rem;
+        gap: 0.5rem;
 
         i {
           @extend .flex;
-          gap: 0.5rem;
+          gap: 0.25rem;
         }
       }
     }
@@ -48,5 +48,19 @@
   .right {
     @extend .flex;
     width: 40%;
+  }
+}
+
+@media (340px <= width < 1000px) {
+  #selectedShow {
+    padding: 1em;
+    flex-direction: column-reverse;
+
+    .left {
+      article {
+        flex-direction: column;
+        gap: 0.5em;
+      }
+    }
   }
 }
