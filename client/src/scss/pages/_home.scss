@@ -1,0 +1,16 @@
+#home {
+  @extend .flex;
+  flex-direction: column;
+
+  & > * {
+    text-align: center;
+  }
+
+  h1 {
+    font: $logo-font;
+  }
+
+  p {
+    font: $link-font;
+  }
+}

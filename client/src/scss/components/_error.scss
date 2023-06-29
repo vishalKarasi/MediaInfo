@@ -1,0 +1,6 @@
+.error {
+  @extend .flex;
+  height: calc(100dvh - 4rem);
+  font: $logo-font;
+  color: red;
+}
