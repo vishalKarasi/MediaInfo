@@ -1,0 +1,7 @@
+#footer {
+  @extend .flex;
+  flex-direction: column;
+  padding: 0.5em;
+  background-color: $clr-container;
+  z-index: 999;
+}

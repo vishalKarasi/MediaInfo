@@ -1,0 +1,12 @@
+.head {
+  @extend .flex;
+  .filter {
+    @extend .flex;
+    justify-content: space-evenly;
+    margin-left: auto;
+    select {
+      margin: 0.5rem;
+      padding: 0.25rem;
+    }
+  }
+}

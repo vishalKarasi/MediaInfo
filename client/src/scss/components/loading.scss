@@ -1,0 +1,22 @@
+.loading {
+  @extend .flex;
+  height: calc(100dvh - 4rem);
+}
+
+.spinner {
+  width: 5rem;
+  height: 5rem;
+  border: 1rem solid $clr-container;
+  border-top-color: $clr-primary;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

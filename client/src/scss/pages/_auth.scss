@@ -1,0 +1,79 @@
+.authForm {
+  @extend .flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 2em;
+  background-color: rgba($clr-text, 0.1);
+  border-radius: 1em;
+
+  .inputBox {
+    .inputField {
+      @extend .flex;
+      position: relative;
+      border-radius: 0.25em;
+
+      .input {
+        padding: 0.5em 2em 0.5em 0.5em;
+        border-radius: 0.25em;
+        width: 30ch;
+        background-color: $clr-container;
+
+        &:focus {
+          box-shadow: 0 0 0.2em crimson;
+        }
+
+        &:valid {
+          box-shadow: 0 0 0.2em teal;
+        }
+
+        &:focus + .inputLabel {
+          color: crimson;
+          box-shadow: 0 -0.1em 0.1em crimson;
+        }
+
+        &:valid + .inputLabel {
+          color: teal;
+          box-shadow: 0 -0.1em 0.1em teal;
+        }
+
+        &:is(:focus, :valid) + .inputLabel {
+          padding: 0 0.5em;
+          transform: scale(0.75);
+          top: -0.8em;
+          z-index: 99;
+          background-color: $clr-container;
+          border-radius: 100vmax;
+        }
+      }
+
+      .inputLabel {
+        position: absolute;
+        left: 0.5em;
+        pointer-events: none;
+      }
+
+      .icon {
+        position: absolute;
+        right: 0.5em;
+      }
+    }
+
+    .inputError {
+      font-size: 0.8em;
+      color: crimson;
+      margin-top: 0.25em;
+    }
+  }
+
+  p {
+    @extend .flex;
+    gap: 0.5em;
+    font-size: 0.8em;
+    width: 100%;
+
+    a:hover {
+      color: $clr-primary;
+      font-size: 1.1em;
+    }
+  }
+}

@@ -1,0 +1,175 @@
+#header {
+  position: sticky;
+  inset: 0 0 auto auto;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 2.5em;
+  background-color: $clr-container;
+  place-items: center;
+
+  .logo {
+    font-size: 1.5em;
+    font-family: poppins;
+  }
+
+  .navbar {
+    @extend .flex;
+    justify-content: space-between;
+    gap: 2em;
+
+    a {
+      @extend .flex;
+      gap: 0.25em;
+
+      .navIcon {
+        @extend .flex;
+      }
+
+      .navLabel {
+        font: $link-font;
+      }
+    }
+  }
+
+  .search {
+    @extend .flex;
+    background-color: $clr-button;
+    border-radius: 0.25em;
+
+    button {
+      @extend .flex;
+      background-color: transparent;
+      padding: 1em;
+    }
+
+    input {
+      width: 24ch;
+      font-size: 0.8em;
+      background-color: transparent;
+    }
+  }
+
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+
+    a {
+      font-size: 0.9em;
+      border-radius: 100vmax;
+    }
+
+    .profilePic {
+      @extend .flex;
+      width: 2em;
+      height: 2em;
+
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+
+    .hamburger {
+      position: relative;
+      display: none;
+      width: 2em;
+      height: 1.5em;
+
+      .line {
+        width: inherit;
+        height: 0.3em;
+        background-color: $clr-button;
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          width: inherit;
+          height: 0.3em;
+          background-color: $clr-button;
+        }
+
+        &::before {
+          inset: 0 auto;
+        }
+
+        &::after {
+          inset: auto 0 0 auto;
+        }
+      }
+    }
+  }
+}
+
+@media (340px <= width < 1200px) {
+  #header {
+    padding-inline: 1em;
+
+    .navbar {
+      position: fixed;
+      flex-direction: column;
+      gap: 0.75em;
+      inset: -100% 0 auto 0;
+      padding: 1em;
+      background-color: $clr-container;
+      transition: all 0.4s linear;
+      z-index: 99;
+
+      &.active {
+        inset: 3.3em 0 auto 0;
+        transition: all 0.4s linear;
+      }
+
+      .navLink {
+        a {
+          letter-spacing: 0.2em;
+          gap: 1em;
+
+          & > * {
+            font-size: 1.25em;
+          }
+        }
+      }
+    }
+
+    .searchbar {
+      display: grid;
+      place-items: center;
+      position: fixed;
+      inset: auto 0 4em 0;
+      background-color: $clr-container;
+      padding-block: 1em;
+      input {
+        width: 65vw;
+      }
+    }
+
+    .menu {
+      .profile {
+        margin-left: auto;
+      }
+
+      .hamburger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+        .line.active {
+          rotate: -45deg;
+          transition: all 0.2s ease-in-out;
+
+          &::before {
+            rotate: -90deg;
+          }
+          &::after {
+            rotate: 90deg;
+          }
+        }
+      }
+    }
+  }
+}

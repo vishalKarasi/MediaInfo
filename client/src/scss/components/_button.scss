@@ -1,0 +1,16 @@
+.button {
+  @extend .flex;
+  font: $link-font;
+  color: var(--clr-font);
+  background: $clr-button;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    scale: 0.8;
+    background-color: transparent;
+    box-shadow: 0 0 0.2rem 0.2rem $clr-primary;
+  }
+}

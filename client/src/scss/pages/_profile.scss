@@ -1,0 +1,96 @@
+#profile {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-block: 1em;
+
+  .userInfo {
+    @extend .flex;
+    gap: 2em;
+
+    .profilePic {
+      position: relative;
+      @extend .flex;
+      width: 22%;
+      aspect-ratio: 1/1;
+
+      img {
+        object-fit: cover;
+        border-radius: 100%;
+      }
+
+      .editPfp {
+        position: absolute;
+        @extend .flex;
+        background-color: $clr-button;
+        width: 2.5em;
+        aspect-ratio: 1/1;
+        border-radius: 100%;
+        inset: auto 1em 1em auto;
+      }
+    }
+
+    .editForm {
+      @extend .flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.5em;
+
+      input {
+        font-size: 1.5em;
+        padding-left: 0.4em;
+        border-radius: 0.2em;
+        width: 20ch;
+        font-family: ubuntu;
+
+        &::placeholder {
+          opacity: 1;
+        }
+      }
+
+      .setting {
+        @extend .flex;
+        width: 100%;
+        gap: 1em;
+        margin-top: 0.5em;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .watchlist {
+    width: 100%;
+
+    .watchlistContainer {
+      @extend .flex;
+      margin-top: 3em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      .card {
+        width: 200px;
+        aspect-ratio: 2/3;
+        font-size: 0.75em;
+      }
+    }
+  }
+}
+
+@media (340px <= width < 1200px) {
+  #profile {
+    .userInfo {
+      flex-direction: column;
+
+      .profilePic {
+        width: 40%;
+
+        .editPfp {
+          inset: auto 0.25em 0.25em auto;
+        }
+      }
+    }
+  }
+}
