@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { FaStar, FaThumbsUp, FaFilm, FaCalendarAlt } from "react-icons/fa";
 import Model from "./Model.jsx";
 
-function Detail() {
+function Details() {
   const dispatch = useDispatch();
   const { selectedMedia, status, error } = useSelector((state) => state.media);
   const { id } = useParams();
@@ -91,4 +91,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default Details;

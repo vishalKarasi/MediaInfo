@@ -26,13 +26,7 @@ function Profile() {
     <main id="profile">
       <section className="userInfo">
         <div className="profilePic">
-          <img
-            src={
-              USER.profilePic &&
-              `http://localhost:5000/uploads/${USER.profilePic}`
-            }
-            alt="pfp"
-          />
+          <img src={USER.profilePic} alt="pfp" />
           {editMode && (
             <label htmlFor="edit" className="editPfp">
               <FaFile />

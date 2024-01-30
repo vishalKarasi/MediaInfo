@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { FaCalendarAlt, FaFilm, FaStar, FaThumbsUp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Model from "./Model.js";
 import { getAnimeById, removeSelectedAnime } from "@app/services/animeSlice.js";
+import Model from "./Model.jsx";
 
 function AnimeDetails() {
   const dispatch = useDispatch();

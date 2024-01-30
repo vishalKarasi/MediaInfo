@@ -33,23 +33,20 @@ export const getUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
+    let newUser = { ...req.body };
+
     const prevUser = await User.findById(userId);
 
-    if (!prevUser) return res.status(404).json({ message: "User not found" });
+    if (req.file) {
+      newUser.profilePic = `${process.env.SERVER_URL}/uploads/${req.file.filename}`;
+      await DELETE_PROMISE(
+        path.join(process.env.UPLOADS_DIR, path.basename(prevUser.profilePic))
+      );
+    }
 
-    const imagePath = path.join(process.env.UPLOADS_DIR, prevUser.profilePic);
-    await DELETE_PROMISE(imagePath);
-
-    const reqData = {
-      ...req.body,
-      profilePic: req.file.filename,
-    };
-
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: reqData },
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(userId, newUser, {
+      new: true,
+    });
 
     const user = {
       username: updatedUser.username,
@@ -67,20 +64,13 @@ export const updateUser = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId);
+    const prevUser = await User.findById(userId);
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    await DELETE_PROMISE(
+      path.join(process.env.UPLOADS_DIR, path.basename(prevUser.profilePic))
+    );
 
-    const imagePath = path.join(process.env.UPLOADS_DIR, user.profilePic);
-    await DELETE_PROMISE(imagePath);
-
-    const result = await User.deleteOne({ _id: userId });
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    await User.findByIdAndDelete(userId);
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {

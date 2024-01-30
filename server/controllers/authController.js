@@ -16,9 +16,10 @@ export const register = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
 
     const hashPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       ...req.body,
-      profilePic: req.file.filename,
+      profilePic: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
       password: hashPassword,
     });
 
@@ -49,9 +50,9 @@ export const login = async (req, res, next) => {
     const refreshToken = createToken("refreshToken", user._id);
 
     res.cookie("refresh_token", refreshToken, {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
+      httpOnly: process.env.HTTP_ONLY,
+      sameSite: process.env.SAME_SITE,
+      secure: process.env.SECURE,
       maxAge: parseInt(process.env.MAX_AGE, 10),
     });
 
@@ -71,11 +72,7 @@ export const logout = async (req, res, next) => {
       return res.status(400).json({ message: "Cookie not found" });
     }
 
-    res.clearCookie("refresh_token", {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    });
+    res.clearCookie("refresh_token");
 
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {

@@ -83,13 +83,7 @@ function Header() {
               Logout
             </Link>
             <Link to="/profile" className="profilePic">
-              <img
-                src={
-                  USER.profilePic &&
-                  `http://localhost:5000/uploads/${USER.profilePic}`
-                }
-                alt="profile"
-              />
+              <img src={USER.profilePic} alt="profile" />
             </Link>
           </>
         ) : (
