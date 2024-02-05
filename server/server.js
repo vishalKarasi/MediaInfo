@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path";
 import { errorHandler } from "./middlewares/errorHandler.js";
 const app = express();
 dotenv.config();
@@ -14,6 +15,7 @@ import userRoute from "./routes/userRoute.js";
 
 // middlewares
 app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(
@@ -24,8 +26,8 @@ app.use(
   })
 );
 
-app.use("/uploads", express.static("uploads"));
-app.use(cookieParser());
+const __dirname = import.meta.dirname;
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // routes
 app.use("/auth", authRoute);
