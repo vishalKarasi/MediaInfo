@@ -5,35 +5,26 @@ import { updateWatchlist } from "@app/services/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
 function MediaCard({ data, type }) {
-  const { id, title, poster, year, rating } = data;
   const dispatch = useDispatch();
+  const { id, title, poster, year, rating } = data;
   const { accessToken, userId } = useSelector((state) => state.auth);
-  let to;
-
-  if (type === "anime") {
-    to = `/animeDetails/${data.id}`;
-  } else {
-    to = `/details/${data.id}`;
-  }
-
+  const { USER } = useSelector((state) => state.user);
+  const to = type === "anime" ? `/animeDetails/${id}` : `/details/${id}`;
   const trimTitle = title.length > 25 ? title.substring(0, 15) + "..." : title;
-
-  const isMediaInWatchlist = useSelector((state) =>
-    state.user.USER.watchlist.some((item) => item?.id === id)
-  );
+  const isFavorite = USER.watchlist.some((item) => item?.id === id);
 
   return (
     <Link to={to} className="card">
       {accessToken && (
         <button
-          className={`cardOption ${isMediaInWatchlist ? "trash" : "favorite"}`}
+          className={`cardOption ${isFavorite ? "trash" : "favorite"}`}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             dispatch(updateWatchlist({ userId, mediaId: id, type }));
           }}
         >
-          {isMediaInWatchlist ? <FaTrash /> : <FaBookmark />}
+          {isFavorite ? <FaTrash /> : <FaBookmark />}
         </button>
       )}
       <div className="poster">

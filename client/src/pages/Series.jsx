@@ -17,8 +17,8 @@ function Series() {
 
   const series = (
     <Carousel>
-      {MEDIA.map((item, index) => (
-        <MediaCard data={item} type="series" key={index} />
+      {MEDIA.map((item) => (
+        <MediaCard data={item} type="series" key={item.id} />
       ))}
     </Carousel>
   );

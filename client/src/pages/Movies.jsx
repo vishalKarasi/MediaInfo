@@ -18,8 +18,8 @@ function Movies() {
 
   const movies = (
     <Carousel>
-      {MEDIA.map((item, index) => (
-        <MediaCard data={item} type="movie" key={index} />
+      {MEDIA.map((item) => (
+        <MediaCard data={item} type="movie" key={item.id} />
       ))}
     </Carousel>
   );

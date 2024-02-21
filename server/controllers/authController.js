@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/userModel.js";
 import { createToken } from "../utils/createToken.js";
+import { handleCloudinaryUpload } from "../middlewares/cloudinary.js";
 
 // user registration
 export const register = async (req, res, next) => {
@@ -19,7 +20,7 @@ export const register = async (req, res, next) => {
 
     const newUser = new User({
       ...req.body,
-      profilePic: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
+      profilePic: await handleCloudinaryUpload(req.file.buffer),
       password: hashPassword,
     });
 
@@ -50,10 +51,12 @@ export const login = async (req, res, next) => {
     const refreshToken = createToken("refreshToken", user._id);
 
     res.cookie("refresh_token", refreshToken, {
-      httpOnly: process.env.HTTP_ONLY,
-      sameSite: process.env.SAME_SITE,
-      secure: process.env.SECURE,
+      domain: process.env.DOMAIN,
+      path: "/",
       maxAge: parseInt(process.env.MAX_AGE, 10),
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
     });
 
     res

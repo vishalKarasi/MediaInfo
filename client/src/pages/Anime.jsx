@@ -18,8 +18,8 @@ function Anime() {
 
   const anime = (
     <Carousel>
-      {ANIME.map((item, index) => (
-        <MediaCard data={item} type="anime" key={index} />
+      {ANIME.map((item) => (
+        <MediaCard data={item} type="anime" key={item.id} />
       ))}
     </Carousel>
   );

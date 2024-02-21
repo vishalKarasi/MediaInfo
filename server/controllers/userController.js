@@ -1,9 +1,9 @@
 import { User } from "../models/userModel.js";
-import fs from "fs";
 import path from "path";
-import { promisify } from "util";
-
-const DELETE_PROMISE = promisify(fs.unlink);
+import {
+  cloudinaryUploader,
+  handleCloudinaryUpload,
+} from "../middlewares/cloudinary.js";
 
 // get user by id
 export const getUser = async (req, res, next) => {
@@ -38,10 +38,10 @@ export const updateUser = async (req, res, next) => {
     const prevUser = await User.findById(userId);
 
     if (req.file) {
-      newUser.profilePic = `${process.env.SERVER_URL}/uploads/${req.file.filename}`;
-      await DELETE_PROMISE(
-        path.join(process.env.UPLOADS_DIR, path.basename(prevUser.profilePic))
-      );
+      newUser.profilePic = await handleCloudinaryUpload(req.file.buffer);
+      if (prevUser.profilePic) {
+        await cloudinaryUploader.destroy(prevUser.profilePic);
+      }
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, newUser, {
@@ -66,9 +66,9 @@ export const deleteUser = async (req, res, next) => {
     const { userId } = req.params;
     const prevUser = await User.findById(userId);
 
-    await DELETE_PROMISE(
-      path.join(process.env.UPLOADS_DIR, path.basename(prevUser.profilePic))
-    );
+    if (prevUser.profilePic) {
+      await cloudinaryUploader.destroy(prevUser.profilePic);
+    }
 
     await User.findByIdAndDelete(userId);
 
