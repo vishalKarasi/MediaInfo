@@ -1,17 +1,17 @@
-import { publicAxios, cookieAxios } from "./serverApi.js";
+import axios from "axios";
+
+const authApi = axios.create({
+  baseURL: "/api/auth",
+});
 
 export const registerApi = (user) => {
-  return publicAxios.post("/auth/register", user);
+  return authApi.post("/register", user);
 };
 
 export const loginApi = (user) => {
-  return cookieAxios.post("/auth/login", user);
+  return authApi.post("/login", user);
 };
 
 export const logoutApi = () => {
-  return cookieAxios.post("/auth/logout");
-};
-
-export const refreshTokenApi = () => {
-  return cookieAxios.get("/auth/refresh");
+  return authApi.post("/logout");
 };

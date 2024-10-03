@@ -2,15 +2,13 @@ import { Router } from "express";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import {
   deleteUser,
-  getUser,
   updateUser,
-  updateWatchlist,
+  updateFavorite,
 } from "../controllers/userController.js";
 import { parserImg } from "../middlewares/multer.js";
 
 const router = Router();
 
-router.get("/:userId", verifyToken, getUser);
 router.patch(
   "/:userId",
   parserImg.single("profilePic"),
@@ -18,6 +16,6 @@ router.patch(
   updateUser
 );
 router.delete("/:userId", verifyToken, deleteUser);
-router.patch("/:userId/:mediaId", verifyToken, updateWatchlist);
+router.patch("/:userId/:mediaId", verifyToken, updateFavorite);
 
 export default router;

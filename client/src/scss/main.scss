@@ -29,6 +29,11 @@ textarea {
   color: $clr-text;
 }
 
+button:disabled {
+  box-shadow: 0 0 0.2rem 0.2rem $clr-primary;
+  background-color: var(--clr-container);
+}
+
 button:hover {
   cursor: pointer;
 }

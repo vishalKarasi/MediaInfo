@@ -41,16 +41,17 @@
   transition: all 0.2s linear;
 
   .cardOption {
+    @extend .flex;
     position: absolute;
     inset: 0 0 auto auto;
-    @extend .flex;
     width: 2.5em;
     height: 2.5em;
+
     border-radius: 0 0 0 1em;
     z-index: 150;
   }
 
-  .favorite {
+  .fav {
     background-color: royalblue;
   }
 

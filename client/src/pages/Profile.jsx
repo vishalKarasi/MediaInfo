@@ -1,32 +1,37 @@
-import React, { useState } from "react";
-import { deleteUser, updateUser } from "@app/services/userSlice.js";
+import React, { useEffect, useState } from "react";
+import {
+  deleteUser,
+  populateFavorite,
+  updateUser,
+} from "@app/services/authSlice.js";
 import Button from "@components/Button.jsx";
 import MediaCard from "@components/MediaCard.jsx";
 import { FaCheckCircle, FaEdit, FaFile, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { USER } = useSelector((state) => state.user);
-  const { userId } = useSelector((state) => state.auth);
+  const { user, favoriteData } = useSelector((state) => state.auth);
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = (event) => {
     event.preventDefault();
     if (editMode) {
       const userData = new FormData(event.target);
-      dispatch(updateUser({ userId, userData }));
+      dispatch(updateUser(userData));
       setEditMode(false);
     } else setEditMode(true);
   };
+
+  useEffect(() => {
+    dispatch(populateFavorite());
+  }, [dispatch]);
 
   return (
     <main id="profile">
       <section className="userInfo">
         <div className="profilePic">
-          <img src={USER.profilePic} alt="pfp" />
+          <img src={user.profilePic} alt="pfp" />
           {editMode && (
             <label htmlFor="edit" className="editPfp">
               <FaFile />
@@ -50,7 +55,7 @@ function Profile() {
           <input
             type="text"
             name="username"
-            placeholder={USER.username}
+            placeholder={user.username}
             readOnly={!editMode}
             style={{ backgroundColor: editMode ? "" : "transparent" }}
           />
@@ -58,7 +63,7 @@ function Profile() {
           <input
             type="text"
             name="email"
-            placeholder={USER.email}
+            placeholder={user.email}
             readOnly={!editMode}
             style={{ backgroundColor: editMode ? "" : "transparent" }}
           />
@@ -75,18 +80,16 @@ function Profile() {
               type="button"
               label="Delete"
               icon={<FaTrash />}
-              onClick={() => {
-                dispatch(deleteUser(userId)).then(() => navigate("/auth"));
-              }}
+              onClick={() => dispatch(deleteUser())}
             />
           </div>
         </form>
       </section>
-      <section className="watchlist">
+      <section className="favorite">
         <h1>WatchList</h1>
-        <div className="watchlistContainer">
-          {USER.watchlist &&
-            USER.watchlist.map((item, key) => (
+        <div className="favoriteContainer">
+          {favoriteData &&
+            favoriteData.map((item, key) => (
               <MediaCard key={key} data={item} type={item.mediaType} />
             ))}
         </div>

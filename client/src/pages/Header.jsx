@@ -11,8 +11,7 @@ import { setSearchTerm } from "@app/services/mediaSlice.js";
 function Header() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { accessToken } = useSelector((state) => state.auth);
-  const { USER } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const [searchVal, setSearchVal] = useState("");
   const [visible, setVisiblity] = useState(false);
   const navigate = useNavigate();
@@ -72,7 +71,7 @@ function Header() {
       )}
 
       <menu className="menu">
-        {accessToken ? (
+        {Boolean(user) ? (
           <>
             <Link
               className="button"
@@ -83,7 +82,7 @@ function Header() {
               Logout
             </Link>
             <Link to="/profile" className="profilePic">
-              <img src={USER.profilePic} alt="profile" />
+              <img src={user.profilePic} alt="profile" />
             </Link>
           </>
         ) : (

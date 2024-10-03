@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,14 +9,14 @@ import {
   FaUserPlus,
   FaFile,
 } from "react-icons/fa";
-import FormInput from "@components/FormInput";
-import Button from "@components/Button";
-import { login, register, toggleAuth } from "@app/services/authSlice";
+import FormInput from "@components/FormInput.jsx";
+import Button from "@components/Button.jsx";
+import { login, register } from "@app/services/authSlice.js";
 
 function Auth() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isRegister } = useSelector((state) => state.auth);
+  const [isRegister, setIsRegister] = useState(false);
+  const { status } = useSelector((state) => state.auth);
 
   const INPUTS = [
     {
@@ -59,7 +59,7 @@ function Auth() {
     event.preventDefault();
     const userData = new FormData(event.target);
     if (!isRegister) dispatch(register(userData));
-    else dispatch(login(userData)).then(() => navigate("/"));
+    else dispatch(login(userData));
   };
 
   return (
@@ -81,15 +81,22 @@ function Auth() {
           <span>
             {isRegister ? "Dont have account?" : "Already have account?"}
           </span>
-          <Link onClick={() => dispatch(toggleAuth())}>
-            {isRegister ? "SignUp" : "SignIn"}
+          <Link onClick={() => setIsRegister(!isRegister)}>
+            {isRegister ? "Register" : "Login"}
           </Link>
         </p>
         <Button
           type="submit"
-          label={isRegister ? "SignIn" : "SignUp"}
+          label={
+            status === "loading"
+              ? "Loading..."
+              : isRegister
+              ? "Login"
+              : "Register"
+          }
           icon={isRegister ? <FaSignInAlt /> : <FaUserPlus />}
           className="button"
+          disabled={status === "loading"}
         />
       </form>
     </main>

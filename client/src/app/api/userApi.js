@@ -1,17 +1,17 @@
-import { privateAxios } from "./serverApi.js";
+import axios from "axios";
 
-export const getUserApi = (userId) => {
-  return privateAxios.get(`/user/${userId}`);
-};
+const userApi = axios.create({
+  baseURL: "/api/user",
+});
 
 export const deleteUserApi = (userId) => {
-  return privateAxios.delete(`/user/${userId}`);
+  return userApi.delete(`/${userId}`);
 };
 
 export const updateUserApi = (userId, userData) => {
-  return privateAxios.patch(`/user/${userId}`, userData);
+  return userApi.patch(`/${userId}`, userData);
 };
 
 export const updateWatchlistApi = (userId, mediaId, type) => {
-  return privateAxios.patch(`/user/${userId}/${mediaId}`, { type });
+  return userApi.patch(`/${userId}/${mediaId}`, { type });
 };

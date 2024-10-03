@@ -1,16 +1,14 @@
 import jwt from "jsonwebtoken";
 
-export function createToken(type, userId) {
-  return jwt.sign(
-    { id: userId },
-    type === "accessToken"
-      ? process.env.ACCESS_TOKEN_SECRET
-      : process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn:
-        type === "accessToken"
-          ? process.env.ACCESS_TOKEN_EXPIRATION_TIME
-          : process.env.REFRESH_TOKEN_EXPIRATION_TIME,
-    }
-  );
+export function createToken(userId, res) {
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_SECRET_EXPIRATION_TIME,
+  });
+
+  res.cookie("jwt", token, {
+    maxAge: 5 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV !== "development",
+  });
 }

@@ -61,10 +61,8 @@
     }
   }
 
-  .watchlist {
-    width: 100%;
-
-    .watchlistContainer {
+  .favorite {
+    .favoriteContainer {
       @extend .flex;
       margin-top: 3em;
       display: flex;
