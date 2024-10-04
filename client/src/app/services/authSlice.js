@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { getMediaById } from "./mediaSlice";
 import { getAnimeById } from "./animeSlice";
+import { sanitiseMedia } from "@app/utility/sanitiseMedia";
 
 const initialState = {
   user: JSON.parse(localStorage.getItem("user-data")) || null,
@@ -64,11 +65,33 @@ export const updateUser = createAsyncThunk(
 // updateFavorite logic
 export const updateFavorite = createAsyncThunk(
   "user/updateFavorite",
-  async ({ mediaId, type }, { getState, rejectWithValue }) => {
-    const { id } = getState()?.auth?.user;
+  async ({ mediaId, type }, { getState, dispatch, rejectWithValue }) => {
+    const { id, favorite } = getState()?.auth?.user;
+
+    const updatedFavorite = { ...favorite };
+    updatedFavorite[mediaId]
+      ? delete updatedFavorite[mediaId]
+      : (updatedFavorite[mediaId] = type);
+
     try {
       const { data } = await updateWatchlistApi(id, mediaId, type);
-      return data;
+      let favoriteDataItem;
+
+      if (!favorite[mediaId]) {
+        const response =
+          type === "anime"
+            ? await dispatch(getAnimeById(mediaId))
+            : await dispatch(getMediaById(mediaId));
+
+        favoriteDataItem = sanitiseMedia(response.payload, type);
+      }
+
+      return {
+        message: data.message,
+        mediaId,
+        updatedFavorite,
+        favoriteDataItem,
+      };
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message;
       return rejectWithValue(errorMessage);
@@ -87,30 +110,9 @@ export const populateFavorite = createAsyncThunk(
           type === "anime" ? getAnimeById(id) : getMediaById(id);
 
         watchlistPromises.push(
-          dispatch(fetchMedia).then((result) => {
-            if (type === "anime") {
-              return {
-                mediaType: type,
-                id: result.payload.data.mal_id,
-                title: result.payload.data.title,
-                poster: result.payload.data.images.jpg.large_image_url,
-                year: result.payload.data.year,
-                rating: result.payload.data.score,
-              };
-            } else {
-              return {
-                mediaType: type,
-                id: result.payload.imdbID,
-                title: result.payload.Title,
-                poster:
-                  result.payload.Poster === "N/A"
-                    ? temp
-                    : result.payload.Poster,
-                year: result.payload.Year,
-                rating: result.payload.imdbRating,
-              };
-            }
-          })
+          dispatch(fetchMedia).then((result) =>
+            sanitiseMedia(result.payload, type)
+          )
         );
       }
 
@@ -168,12 +170,12 @@ export const authSlice = createSlice({
       })
       .addCase(logout.rejected, handleRejected)
 
-      // delete
+      // deleteUser
       .addCase(deleteUser.pending, handlePending)
       .addCase(deleteUser.fulfilled, handleFulfilled)
       .addCase(deleteUser.rejected, handleRejected)
 
-      // update
+      // updateUser
       .addCase(updateUser.pending, handlePending)
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.status = "success";
@@ -187,9 +189,17 @@ export const authSlice = createSlice({
       .addCase(updateFavorite.pending, handlePending)
       .addCase(updateFavorite.fulfilled, (state, { payload }) => {
         state.status = "success";
-        state.user.favorite = payload.favorite;
+        const { message, mediaId, updatedFavorite, favoriteDataItem } = payload;
+        state.user.favorite = updatedFavorite;
+        if (favoriteDataItem) state.favoriteData.push(favoriteDataItem);
+        else {
+          state.favoriteData = state.favoriteData.filter(
+            (item) => item.id !== mediaId
+          );
+        }
+
         localStorage.setItem("user-data", JSON.stringify(state.user));
-        toast.success(payload.message);
+        toast.success(message);
       })
       .addCase(updateFavorite.rejected, handleRejected)
 

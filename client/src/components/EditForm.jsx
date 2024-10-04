@@ -1,4 +1,4 @@
-import { updateUser } from "@app/services/userSlice";
+import { updateUser } from "@app/services/authSlice.js";
 import React from "react";
 import { FaCheckCircle, FaEnvelope, FaFile, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";

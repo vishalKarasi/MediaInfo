@@ -1,5 +1,6 @@
-import React, { lazy } from "react";
-import { useSelector } from "react-redux";
+import { populateFavorite } from "@app/services/authSlice.js";
+import React, { lazy, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 const Header = lazy(() => import("./Header.jsx"));
 const Home = lazy(() => import("./Home.jsx"));
@@ -15,7 +16,16 @@ const Details = lazy(() => import("@components/Details.jsx"));
 const AnimeDetails = lazy(() => import("@components/AnimeDetails.jsx"));
 
 function App() {
+  const dispatch = useDispatch();
+  const [favoritesLoaded, setFavoritesLoaded] = useState(false);
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user && !favoritesLoaded) {
+      dispatch(populateFavorite());
+      setFavoritesLoaded(true);
+    }
+  }, [dispatch, user, favoritesLoaded]);
 
   return (
     <BrowserRouter>

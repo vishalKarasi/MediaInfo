@@ -57,16 +57,14 @@ function AnimeDetails() {
         <article className="info">
           <div>
             <span>Studio:</span>
-            {selectedAnime.studios &&
-              selectedAnime.studios.map((studio) => studio.name).join(", ")}
+            {selectedAnime?.studios.map((studio) => studio.name).join(", ")}
           </div>
           <div>
             <span>Season:</span> {selectedAnime.season}
           </div>
           <div>
             <span>Genres:</span>
-            {selectedAnime.genres &&
-              selectedAnime.genres.map((genre) => genre.name).join(", ")}
+            {selectedAnime?.genres.map((genre) => genre.name).join(", ")}
           </div>
           <div>
             <span>Episodes:</span> {selectedAnime.episodes}
@@ -80,12 +78,10 @@ function AnimeDetails() {
         </article>
       </section>
       <section className="right">
-        {selectedAnime.images?.jpg?.large_image_url && (
-          <img
-            src={selectedAnime.images.jpg.large_image_url}
-            alt={selectedAnime.title}
-          />
-        )}
+        <img
+          src={selectedAnime?.images?.jpg.large_image_url}
+          alt={selectedAnime?.title}
+        />
       </section>
     </>
   );

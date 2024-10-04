@@ -23,9 +23,11 @@ function Header() {
   ];
 
   const handleSearch = () => {
-    if (pathname === "/anime") {
-      dispatch(getAnimeBySearchterm(searchVal));
-    } else dispatch(setSearchTerm(searchVal));
+    if (searchVal) {
+      if (pathname === "/anime") {
+        dispatch(getAnimeBySearchterm(searchVal));
+      } else dispatch(setSearchTerm(searchVal));
+    }
     setSearchVal("");
   };
 

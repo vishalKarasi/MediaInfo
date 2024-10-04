@@ -15,6 +15,7 @@ import { login, register } from "@app/services/authSlice.js";
 
 function Auth() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const { status } = useSelector((state) => state.auth);
 
@@ -55,11 +56,16 @@ function Auth() {
     },
   ];
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = new FormData(event.target);
-    if (!isRegister) dispatch(register(userData));
-    else dispatch(login(userData));
+    if (!isRegister) {
+      await dispatch(register(userData));
+      setIsRegister(true);
+    } else {
+      await dispatch(login(userData));
+      navigate("/profile");
+    }
   };
 
   return (
@@ -94,7 +100,15 @@ function Auth() {
               ? "Login"
               : "Register"
           }
-          icon={isRegister ? <FaSignInAlt /> : <FaUserPlus />}
+          icon={
+            status === "loading" ? (
+              ""
+            ) : isRegister ? (
+              <FaSignInAlt />
+            ) : (
+              <FaUserPlus />
+            )
+          }
           className="button"
           disabled={status === "loading"}
         />

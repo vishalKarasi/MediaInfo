@@ -21,7 +21,7 @@ export const getAnimeById = createAsyncThunk(
       const { data } = await getAnimeByIdApi(id);
       return data;
     } catch (error) {
-      return rejectWithValue(`${error.message}: No Anime found`);
+      return rejectWithValue("No result found");
     }
   }
 );
@@ -31,6 +31,9 @@ export const getAnimeBySearchterm = createAsyncThunk(
   async (searchTerm, { rejectWithValue }) => {
     try {
       const { data } = await getAnimeBySearchtermApi(searchTerm);
+
+      if (data.data.length < 1) return rejectWithValue("No result found");
+
       const filteredData = data.data.map((item) => ({
         id: item.mal_id,
         title: item.title,
@@ -38,9 +41,10 @@ export const getAnimeBySearchterm = createAsyncThunk(
         year: item.year,
         rating: item.score,
       }));
+
       return filteredData;
     } catch (error) {
-      return rejectWithValue(`${error.message}: Error getting anime`);
+      return rejectWithValue("No result found");
     }
   }
 );
@@ -61,7 +65,7 @@ export const getSeasonalAnime = createAsyncThunk(
 
       return filteredData;
     } catch (error) {
-      return rejectWithValue(`${error.message}: Error getting seasonal anime`);
+      return rejectWithValue("No result found");
     }
   }
 );
@@ -92,6 +96,7 @@ export const animeSlice = createSlice({
         state.status = "success";
         state.selectedAnime = payload.data;
       })
+
       .addCase(getAnimeById.rejected, (state, { payload }) => {
         state.status = "error";
         state.error = payload;

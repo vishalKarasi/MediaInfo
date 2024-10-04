@@ -1,6 +1,6 @@
 import { getMediaApi, getMediaByIdApi } from "@app/api/mediaApi.js";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import temp from "../../assets/images/bg.jpg";
+import temp from "@assets/images/bg.jpg";
 
 const initialState = {
   MEDIA: [],
@@ -18,7 +18,7 @@ export const getMediaById = createAsyncThunk(
       const { data } = await getMediaByIdApi(id);
       return data;
     } catch (error) {
-      return rejectWithValue(`${error.message}: No media with such id`);
+      return rejectWithValue("No result found");
     }
   }
 );
@@ -28,7 +28,6 @@ export const getMedia = createAsyncThunk(
   async ({ type, searchTerm, year }, { rejectWithValue }) => {
     try {
       const { data } = await getMediaApi(type, searchTerm, year);
-
       const filteredData = data.Search.map((item) => ({
         id: item.imdbID,
         title: item.Title,
@@ -38,7 +37,7 @@ export const getMedia = createAsyncThunk(
 
       return filteredData;
     } catch (error) {
-      return rejectWithValue(`${error.message}: Invalid searchterm`);
+      return rejectWithValue("No result found");
     }
   }
 );

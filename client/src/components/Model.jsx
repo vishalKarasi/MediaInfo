@@ -1,8 +1,8 @@
 import React from "react";
 
-function Model({ type, messaage }) {
+function Model({ type, message }) {
   return type === "error" ? (
-    <div className="error">{messaage}</div>
+    <div className="error">{message}</div>
   ) : (
     <div className="loading">
       <div className="spinner"></div>

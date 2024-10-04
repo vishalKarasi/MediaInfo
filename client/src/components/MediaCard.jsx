@@ -2,7 +2,7 @@ import React, { useState, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaCalendar, FaStar, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { populateFavorite, updateFavorite } from "@app/services/authSlice";
+import { updateFavorite } from "@app/services/authSlice";
 
 function MediaCard({ data, type }) {
   const dispatch = useDispatch();
@@ -19,7 +19,6 @@ function MediaCard({ data, type }) {
       e.preventDefault();
       setLoading(true);
       await dispatch(updateFavorite({ mediaId: id, type }));
-      await dispatch(populateFavorite());
       setLoading(false);
     },
     [dispatch, id, type]

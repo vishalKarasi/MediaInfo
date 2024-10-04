@@ -64,8 +64,6 @@ export const updateFavorite = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log(user.favorite);
-
     user.favorite[mediaId]
       ? delete user.favorite[mediaId]
       : (user.favorite[mediaId] = type);
@@ -76,11 +74,9 @@ export const updateFavorite = async (req, res, next) => {
 
     user.markModified("favorite");
 
-    console.log(user.favorite);
-
     await user.save();
 
-    res.status(200).json({ message, favorite: user.favorite });
+    res.status(200).json({ message });
   } catch (error) {
     next(error);
   }
